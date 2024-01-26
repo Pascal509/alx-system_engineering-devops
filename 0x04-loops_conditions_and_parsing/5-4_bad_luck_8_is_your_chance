@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# This script is displaying "Best School" n times except for the 4th and 8th iteration
+
+x=1
+while ((x<=10))
+do
+	if [ $x == 4 ]
+	then
+		echo "bad luck"
+	elif [ $x == 8 ]
+	then
+		echo "good luck"
+	else
+		echo "Best School"
+	fi
+	((x++))
+done
+exit 0
