@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Bash script that displays
+i=0
+while ((i<12))
+do
+	echo "To infinity and beyond"
+	trap "echo "1 am invisible!!"" SIGTERM
+	sleep 2
+done
