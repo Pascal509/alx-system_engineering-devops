@@ -2,6 +2,6 @@
 
 exec { 'killmenow':
   command     => '/bin/pkill -f killmenow',
-  path        => ['/bin', '/usr/bin'],
+  path        => ['/bin', '/usr/local/bin/'],
   refreshonly => true,
 }
