@@ -6,4 +6,4 @@ IP=$2
 USERNAME=$3
 PATH_TO_SSH_KEY=$4
 
-scp -o StrictHostKeyChecking=no "$3"@"$2:~/" -i "$4" "$1"
+scp -o StrictHostKeyChecking=no -i "$PATH_TO_SSH_KEY" "$PATH_TO_FILE" "$USERNAME@$IP:~/" || { echo "Error: File transfer failed"; exit 1; }
