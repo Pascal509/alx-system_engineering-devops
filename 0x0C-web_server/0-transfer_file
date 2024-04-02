@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Write a Bash script that transfers a file from our client to a server:
+
+PATH_TO_FILE=$1
+IP=$2
+USERNAME=$3
+PATH_TO_SSH_KEY=$4
+
+scp -o StrictHostKeyChecking=no -i "$PATH_TO_SSH_KEY" "$PATH_TO_FILE" "$USERNAME@$IP:~/" || { echo "Error: File transfer failed"; exit 1; }
