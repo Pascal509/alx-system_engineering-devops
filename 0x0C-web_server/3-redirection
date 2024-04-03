@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Configure your Nginx server so that /redirect_me is redirecting to another page.
+
+if ! command -v &> /dev/null;
+then
+	apt-get update
+	apt-get install -y nginx
+fi
+
+#redirect_config="rewrite ^/$ http://ezenagu.tech permanent;"
+redirect_config="location /redirect_me {return 301 http://example.com/redirected_page;}"
+
+echo "$redirect_config" > /tmp/redirect_config
+
+sed -i '/server {/r /tmp/redirect_config' /etc/nginx/sites-available/default
+
+rm /tmp/redirect_config
+
+service nginx restart
