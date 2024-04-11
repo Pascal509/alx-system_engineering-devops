@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Using your debugging skills, find out what’s keeping your Ubuntu container’s Nginx installation from listening on port 80. Feel free to install whatever tool you need, start and destroy as many containers as you need to debug the issue. Then, write a Bash script with the minimum number of commands to automate your fix.
+
+version="nginx version"
+if [ -z "$version" ]
+then
+	echo "=== Installing nginx ==="
+	sudo apt update -y
+	sudo apt -y install nginx
+	echo "++++nginx installed++++"
+else
+	echo "$version"
+fi
+
+#Set nginx to listen at defailt port 80
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+
+#restart nginx
+sudo service nginx restart
