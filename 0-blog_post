@@ -1,0 +1,51 @@
+When you type google.com into your browser and press Enter, a wonderful journey to the Google search page begins. 
+
+
+DNS:
+The Domain Name System (DNS) is the phonebook of the Internet. Humans access information online through domain names, like
+google.com/
+. Web browsers interact through Internet protocol (IP) addresses.
+The DNS server is responsible for translating human-readable domain names into the corresponding IP addresses used by computers to communicate over the internet.
+There are 4 DNS server involved in loading a Web page:
+DNS recursor - The recursor can be thought of as a librarian who is asked to go find a particular book somewhere in a library.
+Root nameserver - The root server is the first step in translating (resolving) human readable host names into IP addresses. 
+TLD nameserver - The top level domain server (TLD) can be thought of as a specific rack of books in a library.
+Authoritative nameserver - This final nameserver can be thought of as a dictionary on a rack of books, in which a specific name can be translated into its definition.
+Therefore, your computer connects to the DNS server first, and then it connects to the internet using the obtained IP address. the DNS server is like a look-up book, it accepts the name of the website you entered in your browser and look for the IP address of that name from its directory.
+IP addresses are typically represented as a series of numbers separated by periods, such as “192.168.0.1” (IPv4 which is 32bits) or “2001:0db8:85a3:0000:0000:8a2e:0370:7334” (IPv6 which is 164bits).
+An IP address uniquely identifies a device on a network, allowing other devices on the internet to locate and communicate with the device.
+IP addresses are used to route data packets between devices across the internet. 
+
+TCP/IP
+TCP/IP stands for Transmission Control Protocol/Internet Protocol. TCP/IP is a set of standardized rules that allow computers to communicate on a network such as the internet.
+Think of it as ensuring a robust connection to your friend's home before engaging in a conversation.
+after the DNS server returns the IP address of “
+google.com/
+” the internet direct us to the server or simply the computer hosting Google's website information. TCP is responsible for data delivery once that IP address has been found.
+
+FIREWALL
+Firewall is a network security system that monitors and controls incoming and outgoing network traffic based on predetermined security rules. A firewall typically establishes a barrier between a trusted network and an untrusted network, such as the Internet.Firewalls are categorized as a network-based or a host-based system.
+Network-based firewalls are positioned between two or more networks, typically between the local area network (LAN)andwide area network (WAN), their basic function being to control the flow of data between connected networks.
+Host-based firewalls are deployed directly on the hostitself to control network traffic or other computing resources.This can be a daemon or service as a part of the operating system or an agent application for protection.
+Packet filter, connection tracking and application Layer are among the types of firewall.
+
+HTTPS/SSL
+Hypertext Transfer Protocol Secure (HTTPS) is an extension of the (HTTP). It uses encryption for secure communication over a computer network, and is widely used on the Internet. In HTTPS, the communication protocol is encrypted using (TLS) or, formerly, Secure Sockets Layer (SSL).
+This encryption protects your data from being intercepted or tampered with by unauthorized parties. this layer is very important for any website that want to keep user’s sensitive information on their website such as credit cards, password etc, secure and safe from hackers.
+
+LOAD BALANCER
+so after google encrypt your data, Google’s infrastructure typically employs load balancers to distribute incoming network traffic across multiple servers.
+Load balancers help optimize performance, prevent overload on individual servers, and improve reliability. 
+It allows applications to perform better by sending requests to multiple servers, decreasing the burden of managing and maintaining network sessions. You can use different algorithms to help you operate load balancing on a network depending on your needs, they include; Round robin, least connections, IP hash, Random.
+Without a load balancer, Google’s servers may experience higher loads, leading to degraded performance and slower response times for users(imagine you recieving the result of your search after many hours!).
+
+WEB SERVER
+The Google web server is responsible for handling HTTP requests and delivering static content (such as HTML files, images, CSS, and JavaScript) to clients, typically web browsers. Its primary function is to host and serve google web pages and static resources. Web servers are optimized for handling large volumes of simple HTTP requests and are designed to efficiently serve static content. in short, the web server help in hosting the front-end.
+
+APPLICATION SERVER
+It provides an environment for executing and managing dynamic, google server-side applications. It offers additional services and capabilities beyond what a web server provides, enabling the execution of complex business logic, processing of dynamic data, and supporting various application frameworks and technologies. In short, the application server hosts the back-end of the website.
+
+DATABASE
+Database is an organized collection of data or a type of data store based on the use of a databse management system (DBMS), the software that interacts with end users, applications, and the database itself to capture and analyze the data. Databases play a crucial role in handling dynamic content, user interactions, and backend operations. The database is responsible for storing all the information that google gives back to you.
+
+At last, the response is delivered back to the client's computer which processes it and displays the response on the screen for the user to read.

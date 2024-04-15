@@ -12,8 +12,5 @@ else
 	echo "$version"
 fi
 
-#Set nginx to listen at defailt port 80
 sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
-
-#restart nginx
 sudo service nginx restart
