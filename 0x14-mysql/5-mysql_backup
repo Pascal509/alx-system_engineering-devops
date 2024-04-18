@@ -1,0 +1,43 @@
+#!/bin/bash
+# Write a Bash script that generates a MySQL dump and creates a compressed archive out of it.
+
+# Accept the MySQL root password as an argument
+mysql_root_password="$1"
+
+# Directory to store the backup files
+backup_dir="/path/to/backup/directory"
+
+# Create a timestamp for the backup file name
+timestamp=$(date +"%d-%m-%Y")
+
+# MySQL dump file name
+dump_file="backup.sql"
+
+# Create the MySQL dump
+mysqldump -u root -p"${mysql_root_password}" --all-databases > "${backup_dir}/${dump_file}"
+
+# Check if the dump file was created successfully
+if [ $? -ne 0 ]; then
+    echo "MySQL dump failed. Exiting."
+    exit 1
+fi
+
+# Change to the backup directory
+cd "${backup_dir}" || exit
+
+# Compress the MySQL dump into a tar.gz archive
+tar -czf "${timestamp}.tar.gz" "${dump_file}"
+
+# Check if the compression was successful
+if [ $? -eq 0 ]; then
+    echo "MySQL dump compressed successfully."
+else
+    echo "Compression failed. Exiting."
+    exit 1
+fi
+
+# Remove the uncompressed dump file
+rm "${dump_file}"
+
+echo "Backup completed: ${timestamp}.tar.gz"
+

@@ -1,4 +1,5 @@
 #!/bin/bash
+#Fix this container so that Nginx is running as the nginx user.
 
 # Update Nginx configuration to run as nginx user
 sed -i 's/^user .*;$/user nginx;/' /etc/nginx/nginx.conf
