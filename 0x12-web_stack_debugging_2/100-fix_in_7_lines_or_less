@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+# Using what you did for task #1, make your fix short and sweet.
 sed -i 's/^user .*;$/user nginx/' /etc/nginx/nginx.conf
 service nginx restart
 ps auxff | grep ngin[x]
