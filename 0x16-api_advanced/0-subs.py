@@ -34,5 +34,3 @@ def number_of_subscribers(subreddit):
             return 0  # No subscriber data found
     except requests.RequestException:
         return 0  # Handles any request errors, including HTTPError
-
-# The function is ready for import and use in the provided testing environment.
