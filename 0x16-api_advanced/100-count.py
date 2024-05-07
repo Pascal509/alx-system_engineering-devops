@@ -4,8 +4,8 @@ Module to count words appearing in titles of hot
 posts in a specified subreddit.
 """
 from collections import Counter
-import requests
 import re
+import requests
 
 
 def count_words(subreddit, word_list, after=None, counts=None):

@@ -11,11 +11,11 @@ def number_of_subscribers(subreddit):
     Queries the Reddit API for the number of subscribers to a subreddit.
 
     Args:
-    subreddit (str): The subreddit to query.
+        subreddit (str): The subreddit to query.
 
     Returns:
-    int: The number of subscribers to the subreddit, or 0 if
-    the subreddit is invalid.
+        int: The number of subscribers to the subreddit, or 0 if
+             the subreddit is invalid.
     """
     # URL for the subreddit's about page in JSON format
     url = f'https://www.reddit.com/r/{subreddit}/about.json'
@@ -34,3 +34,5 @@ def number_of_subscribers(subreddit):
             return 0  # No subscriber data found
     except requests.RequestException:
         return 0  # Handles any request errors, including HTTPError
+
+# The function is ready for import and use in the provided testing environment.
