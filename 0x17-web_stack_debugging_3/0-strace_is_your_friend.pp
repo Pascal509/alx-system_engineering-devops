@@ -35,8 +35,8 @@ service { 'apache2':
 # Ensure mod_rewrite is enabled, but only after Apache is installed
 exec { 'enable-mod-rewrite':
   command     => 'a2enmod rewrite && systemctl restart apache2',
-  path        => ['/bin', '/usr/bin'],
-  unless      => 'a2query -m rewrite | grep enabled',
+  path        => ['/bin', '/usr/bin', '/usr/sbin'],
+  unless      => '/usr/sbin/a2query -m rewrite | grep enabled',
   require     => Package['apache2'], # Ensures that Apache is installed before attempting to enable modules
   notify      => Service['apache2'], # Restart Apache service to apply changes
 }
