@@ -1,38 +1,42 @@
-# This Puppet manifest fixes permission issues for Apache on Ubuntu 14.04
+# This Puppet manifest ensures that Apache is installed, configured,
+# and running with the correct permissions set on its web directory and necessary files.
 
 # Ensure Apache package is installed
 package { 'apache2':
   ensure => installed,
 }
 
+# Ensure the /var/www/html directory exists with the correct owner, group, and permissions
 file { '/var/www/html':
-  ensure  => 'directory',      # Ensures it is a directory
-  owner   => 'root',       # Correct owner
-  group   => 'root',       # Correct group
-  mode    => '0755',           # Correct permissions
-  before => File['/var/www/html/index.html'],  # This ensures the directory is created before the file
+  ensure  => 'directory',
+  owner   => 'www-data',       # Usually, Apache runs as www-data in Ubuntu
+  group   => 'www-data',
+  mode    => '0755',
+  require => Package['apache2'], # Dependency to ensure Apache is installed first
 }
 
-# Ensure the needed file exists with correct permissions and content
-file { '/path/to/needed/file':
-  ensure  => present,
-  owner   => 'root',
-  group   => 'root',
+# Ensure the default index.html exists with correct permissions and content
+file { '/var/www/html/index.html':
+  ensure  => 'file',
+  owner   => 'www-data',
+  group   => 'www-data',
   mode    => '0644',
-  content => "Content of the file\n",
+  content => "<html>\n<head>\n<title>Welcome</title>\n</head>\n<body>\n<p>Apache is running.</p>\n</body>\n</html>\n",
+  require => File['/var/www/html'], # Ensures that the directory is set up before the file
 }
 
-# Ensure Apache is running
+# Ensure Apache is running and enabled to start at boot
 service { 'apache2':
-  ensure     => running,
-  enable     => true,
+  ensure    => running,
+  enable    => true,
   require   => Package['apache2'], # Ensures that the package is installed first
 }
 
+# Ensure mod_rewrite is enabled, but only after Apache is installed
 exec { 'enable-mod-rewrite':
-  command     => 'a2enmod rewrite',
+  command     => 'a2enmod rewrite && systemctl restart apache2',
   path        => ['/bin', '/usr/bin'],
-  refreshonly => true,  # Only run this exec if notified by another resource
-  subscribe   => Package['apache2'],  # This command runs after the apache2 package is handled
-  notify      => Service['apache2'],  # Notify the apache service to restart after running this command
+  unless      => 'a2query -m rewrite | grep enabled',
+  require     => Package['apache2'], # Ensures that Apache is installed before attempting to enable modules
+  notify      => Service['apache2'], # Restart Apache service to apply changes
 }
