@@ -1,16 +1,62 @@
 #!/usr/bin/env bash
 # Using your debugging skills, find out what’s keeping your Ubuntu container’s Nginx installation from listening on port 80. Feel free to install whatever tool you need, start and destroy as many containers as you need to debug the issue. Then, write a Bash script with the minimum number of commands to automate your fix.
 
-version="nginx version"
-if [ -z "$version" ]
-then
-	echo "=== Installing nginx ==="
-	sudo apt update -y
-	sudo apt -y install nginx
-	echo "++++nginx installed++++"
+# version="nginx version"
+# if [ -z "$version" ]
+# then
+# 	echo "=== Installing nginx ==="
+# 	sudo apt update -y
+# 	sudo apt -y install nginx
+# 	echo "++++nginx installed++++"
+# else
+# 	echo "$version"
+# fi
+
+# sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+# sudo service nginx restart
+
+#!/usr/bin/env bash
+# This script ensures Nginx is installed and configured to listen on port 80
+
+# Update package lists
+sudo apt-get update -y
+
+# Check if Nginx is installed; install if not
+if ! command -v nginx &> /dev/null; then
+    echo "Installing Nginx..."
+    sudo apt-get install -y nginx
+    echo "Nginx has been installed."
 else
-	echo "$version"
+    echo "Nginx is already installed."
 fi
 
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
-sudo service nginx restart
+# Ensure Nginx starts on system boot
+sudo systemctl enable nginx
+
+# Nginx should listen on port 80 across all interfaces
+# Overwrite the default site configuration
+sudo tee /etc/nginx/sites-available/default > /dev/null <<EOF
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
+
+# Reload Nginx to apply the changes
+sudo systemctl restart nginx
+
+# Optionally, check if Nginx is listening on port 80 (this part is not necessary for the script's function but is good for debugging)
+if sudo netstat -plnt | grep ':80'; then
+    echo "Nginx is listening on port 80"
+else
+    echo "Failed to configure Nginx to listen on port 80"
+fi
