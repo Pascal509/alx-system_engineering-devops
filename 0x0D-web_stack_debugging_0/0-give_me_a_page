@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Connect to the Docker container
-docker exec -it <container_id> /bin/bash
+docker exec -it 0f4d5ac5980b /bin/bash
 
 # Check if Apache is running
 if service apache2 status | grep -q "apache2 is running"; then
