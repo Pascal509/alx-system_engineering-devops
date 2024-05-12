@@ -1,0 +1,15 @@
+# Connect to the Docker container
+docker exec -it <container_id> /bin/bash
+
+# Check if Apache is running
+service apache2 status
+
+# If Apache is not running, start it
+service apache2 start
+
+# Check Apache's error log for any issues
+tail -n 20 /var/log/apache2/error.log
+
+# Check Apache's configuration files for any errors
+apachectl configtest
+
